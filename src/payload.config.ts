@@ -14,6 +14,7 @@ import { Media } from "./collections/Media";
 import { Categories } from "./collections/Categories";
 import { Tags } from "./collections/Tags";
 import { Tenants } from "./collections/Tenants";
+import { Config } from "./payload-types";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -33,22 +34,11 @@ export default buildConfig({
   },
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || "",
-    mongooseOptions: {
-      connectTimeoutMS: 60000, // 60 seconds
-      socketTimeoutMS: 60000, // 60 seconds
-      serverSelectionTimeoutMS: 60000, // 60 seconds
-      maxPoolSize: 10,
-      // MongoDB driver options
-      mongoOptions: {
-        maxTimeMS: 60000, // 60 seconds for operation timeout
-        wtimeoutMS: 30000 // 30 seconds for write concern timeout
-      }
-    },
   }),
   sharp,
   plugins: [
     payloadCloudPlugin(),
-    multiTenantPlugin({
+    multiTenantPlugin<Config>({
       collections: {
         products: {},
       },
