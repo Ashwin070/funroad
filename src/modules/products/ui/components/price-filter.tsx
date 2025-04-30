@@ -64,7 +64,7 @@ export const PriceFilter = ({
                 </Label>
                 <Input 
                 type="text"
-                placeholder="∞"
+                placeholder="₹∞"
                 value={maxPrice ? formatAsCurrency(maxPrice): ""}
                 onChange={handleMaxPriceChange}
                 />
